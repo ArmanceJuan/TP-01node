@@ -17,13 +17,23 @@ let users = [
 ];
 
 const server = http.createServer((req, res) => {
-  try {
-    console.log(`Requête reçue pour ${req.url}`);
-    res.writeHead(200, { "Content-Type": "text/html" });
-    res.end("Hello World");
-  } catch (error) {
-    res.writeHead(500, { "Content-Type": "text/plain" });
-    res.end("Erreur lors de la compilation du fichier", err.message);
+  if (req.url === "/" && req.method === "GET") {
+    try {
+      console.log("Page chargée");
+      const compileTemplate = pug.compileFile(
+        path.join(__dirname, "./views/home.pug")
+      );
+      const html = compileTemplate();
+      res.writeHead(200, { "Content-Type": "text/html" });
+      res.end(html);
+    } catch (err) {
+      console.log("Erreur dans le chargement de la page");
+      res.writeHead(500, { "Content-Type": "text/html" });
+      res.end("500 Internal Server Error");
+    }
+  } else {
+    res.writeHead(404, { "Content-Type": "text/html" });
+    res.end("404 Not Found");
   }
 });
 
