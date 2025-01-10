@@ -31,6 +31,20 @@ const server = http.createServer((req, res) => {
       res.writeHead(500, { "Content-Type": "text/html" });
       res.end("500 Internal Server Error");
     }
+  } else if (req.url === "/users" && req.method === "GET") {
+    try {
+      console.log("Récupération des utilisateurs");
+      const compileTemplate = pug.compileFile(
+        path.join(__dirname, "./views/users.pug")
+      );
+      const html = compileTemplate({ users });
+      res.writeHead(200, { "Content-Type": "text/html" });
+      res.end(html);
+    } catch (err) {
+      console.log("Erreur dans la récupération des utilisateurs");
+      res.writeHead(500, { "Content-Type": "text/html" });
+      res.end("500 Internal Server Error");
+    }
   } else {
     res.writeHead(404, { "Content-Type": "text/html" });
     res.end("404 Not Found");

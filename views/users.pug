@@ -1,0 +1,14 @@
+extend layout.pug 
+
+block content
+  h2 Utilisateurs 
+  table
+    thead
+      tr
+        th Nom
+        th Date de naissance
+    tbody
+      each user in users
+        tr
+          td= user.name
+          td= user.birth
