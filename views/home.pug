@@ -2,11 +2,14 @@ extend layout.pug
 
 block content
   h2 Ajouter un utilisateur
-  form(action="/users", method="POST")
+  form(action="/", method="POST")
     label Nom
-    input(type="text", name="name")
+    input(type="text", name="name" required)
     br
     label Date de naissance
-    input(type="date", name="birth")
+    input(type="date", name="birth" required)
+    br
+    if message 
+      p= message
     br
     button(type="submit") Ajouter
